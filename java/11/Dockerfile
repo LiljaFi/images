@@ -20,28 +20,23 @@
 # SOFTWARE.
 #
 
-# Hard coded specific Java version to fix issue with manifest constructor class in
-# newer Java versions breaking all modpacks and versions that are not using the
-# latest Forge release. This should be removed when the manifest constructor class
-# issue is backported or if Forge decides to abandon old versions and we need
-# newer Java versions. Old Quay images were updated like once a year, so it's ok.
-#
-# @see https://github.com/McModLauncher/modlauncher/issues/91
-
-FROM        --platform=$TARGETOS/$TARGETARCH eclipse-temurin:11.0.13_8-jdk-focal
+#FROM        --platform=alpine/$TARGETARCH eclipse-temurin:21-jdk-alpine
+FROM        eclipse-temurin:11-jdk-alpine
 
 LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 
 LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolks"
 LABEL       org.opencontainers.image.licenses=MIT
 
-RUN 		apt-get update -y \
- 			&& apt-get install -y lsof curl ca-certificates openssl git tar sqlite3 fontconfig libfreetype6 tzdata iproute2 libstdc++6 \
- 			&& useradd -d /home/container -m container
+#RUN                            apk update -y \
+#                                               && apk install -y lsof curl ca-certificates openssl git tar sqlite3 fontconfig libfreetype6 tzdata iproute2 libstdc++6 \
+#                                               && adduser -d /home/container -m container
+
+RUN adduser -h /home/container -D container
 
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
 
 COPY        ./../entrypoint.sh /entrypoint.sh
-CMD         [ "/bin/bash", "/entrypoint.sh" ]
+CMD         [ "/bin/sh", "/entrypoint.sh" ]
