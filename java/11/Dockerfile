@@ -19,18 +19,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-
-#FROM        --platform=alpine/$TARGETARCH eclipse-temurin:21-jdk-alpine
-FROM        eclipse-temurin:11-jdk-alpine
+FROM        amd64/eclipse-temurin:11-jdk-alpine
 
 LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 
 LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolks"
 LABEL       org.opencontainers.image.licenses=MIT
-
-#RUN                            apk update -y \
-#                                               && apk install -y lsof curl ca-certificates openssl git tar sqlite3 fontconfig libfreetype6 tzdata iproute2 libstdc++6 \
-#                                               && adduser -d /home/container -m container
 
 RUN adduser -h /home/container -D container
 
