@@ -29,6 +29,7 @@ LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolk
 LABEL       org.opencontainers.image.licenses=MIT
 
 RUN apk add eudev udev-init-scripts
+RUN apk add --update --no-cache libstdc++ ca-certificates curl fontconfig git openssl sqlite tar tzdata
 
 RUN adduser -h /home/container -D container
 
