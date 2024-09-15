@@ -33,7 +33,7 @@ LABEL       org.opencontainers.image.licenses=MIT
 #                                               && adduser -d /home/container -m container
 
 RUN apk add eudev udev-init-scripts
-RUN apk add --update --no-cache libstdc++ ca-certificates curl fontconfig git openssl sqlite tar tzdata libc-dev
+RUN apk add --update --no-cache libstdc++ ca-certificates curl fontconfig git openssl sqlite tar tzdata libc-dev gcompat
 
 RUN adduser -h /home/container -D container
 
