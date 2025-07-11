@@ -21,7 +21,7 @@
 #
 
 #FROM        --platform=alpine/$TARGETARCH eclipse-temurin:21-jdk-alpine
-FROM        --platform=$TARGETOS/$TARGETARCH ghcr.io/graalvm/jdk-community:19
+FROM ghcr.io/graalvm/jdk-community:19
 
 LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 
