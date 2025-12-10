@@ -1,6 +1,6 @@
 FROM php:8.3-fpm-bookworm
 
-LABEL author="Lily" maintainer="lily@falixnodes.net"
+LABEL author="FalixNodes" maintainer="support@falixnodes.net"
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -24,21 +24,23 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy configuration files
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
-COPY entrypoint.sh /entrypoint.sh
+# Create container user
+RUN useradd -m -d /home/container -s /bin/bash container
 
+# Create directories with proper permissions
+RUN mkdir -p /home/container/logs /home/container/public /home/container/tmp \
+    && chown -R container:container /home/container
+
+# Copy config files to home directory
+COPY --chown=container:container nginx.conf /home/container/nginx.conf
+COPY --chown=container:container php-fpm.conf /home/container/php-fpm.conf
+COPY --chown=container:container supervisord.conf /home/container/supervisord.conf
+COPY --chown=container:container entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-RUN useradd -m -d /home/container -s /bin/bash container \
-    && chown -R container:container /var/lib/nginx /var/log/nginx /run
 
 USER container
 ENV USER=container HOME=/home/container
 ENV COMPOSER_HOME=/home/container/.composer
 WORKDIR /home/container
 
-COPY entrypoint.sh /entrypoint.sh
-CMD [ "/bin/bash", "/entrypoint.sh" ]
+CMD ["/bin/bash", "/entrypoint.sh"]
