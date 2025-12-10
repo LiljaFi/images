@@ -26,5 +26,5 @@ ENV USER=container HOME=/home/container
 ENV COMPOSER_HOME=/home/container/.composer
 WORKDIR /home/container
 
-COPY ./../entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 CMD [ "/bin/bash", "/entrypoint.sh" ]
