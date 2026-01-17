@@ -22,7 +22,7 @@
 #
 
 # Default the TZ environment variable to UTC.
-TZ=${TZ:-UTC}
+#TZ=${TZ:-UTC}
 export TZ
 
 # Set environment variable that holds the Internal Docker IP

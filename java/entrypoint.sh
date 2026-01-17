@@ -6,7 +6,7 @@
 PARSED=$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g' | eval echo "$(cat -)")
 
 if [ -z "${TIMEZONE}" ]; then
-  TZ=${TIMEZONE}
+  #TZ=${TIMEZONE}
 fi
 
 # shellcheck disable=SC2086
